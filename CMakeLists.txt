@@ -1,12 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
-
-project(ConanGoogleBenchmark)
+project(cmake_wrapper)
 
 include(conanbuildinfo.cmake)
-conan_basic_setup(TARGETS)
+conan_basic_setup()
 
-if(BENCHMARK_ENABLE_TESTING)
-    enable_testing()
-endif()
-
-add_subdirectory(benchmark)
+add_subdirectory("source_subfolder")

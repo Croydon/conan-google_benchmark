@@ -26,9 +26,9 @@ class GoogleBenchmarkConan(ConanFile):
     def source(self):
         archive_url = "https://github.com/google/benchmark/archive/v{!s}.zip".format(self.version)
         tools.get(archive_url, sha256="61ae07eb5d4a0b02753419eb17a82b7d322786bb36ab62bd3df331a4d47c00a7")
-        shutil.move("benchmark-{!s}".format(self.version), "benchmark")
+        shutil.move("benchmark-{!s}".format(self.version), self.source_subfolder)
 
-    def build(self):
+    def _configure_cmake(self):
         cmake = CMake(self)
         cmake.definitions["BUILD_SHARED_LIBS"] = "ON" if self.options.shared else "OFF"
         cmake.definitions["BENCHMARK_ENABLE_TESTING"] = "OFF"
@@ -41,15 +41,22 @@ class GoogleBenchmarkConan(ConanFile):
             cmake.definitions["BENCHMARK_USE_LIBCXX"] = "ON" if (str(self.settings.compiler.libcxx) == "libc++") else "OFF"
         else:
             cmake.definitions["BENCHMARK_USE_LIBCXX"] = "OFF"
+        cmake.configure(build_folder=self.build_subfolder)
+        return cmake
 
-        cmake.configure()
+    def build(self):
+        cmake = self._configure_cmake()
         cmake.build()
-        cmake.install()
 
     def package(self):
+        cmake = self._configure_cmake()
+        cmake.install()
+
+        self.copy(pattern="LICENSE", dst="licenses", src=self.source_subfolder)
         self.copy(pattern="*.h", dst="include", src="include/benchmark", keep_path=False)
         self.copy("benchmarkConfig.cmake", dst=".", src=".", keep_path=False)
         self.copy(pattern="*", dst="lib", src="lib", keep_path=False)
+        self.copy(pattern="*.dll", dst="bin", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
