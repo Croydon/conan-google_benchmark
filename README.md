@@ -2,11 +2,11 @@
 [![Build Status](https://travis-ci.org/bincrafters/conan-google_benchmark.svg?branch=stable%2F1.4.1)](https://travis-ci.org/bincrafters/conan-google_benchmark)
 [![Build status](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-google_benchmark?branch=stable%2F1.4.1&svg=true)](https://ci.appveyor.com/project/bincrafters/conan-google_benchmark)
 
-[Conan.io](https://conan.io) package recipe for *benchmark*.
+[Conan.io](https://conan.io) package recipe for [*google_benchmark*](https://github.com/google/benchmark).
 
 A microbenchmark support library.
 
-The packages generated with this **conanfile** can be found on [Bintray](https://bintray.com/bincrafters/public-conan/benchmark%3Abincrafters).
+The packages generated with this **conanfile** can be found on [Bintray](https://bintray.com/bincrafters/public-conan/google_benchmark%3Abincrafters).
 
 ## For Users: Use this package
 
@@ -46,6 +46,7 @@ The following command both runs all the steps of the conan file, and publishes t
 | ------------- |:----------------- |:------------:|
 | enable_lto      | False |  [True, False] |
 | enable_exceptions      | True |  [True, False] |
+| shared      | False |  [True, False] |
 
 ## Add Remote
 
@@ -58,5 +59,7 @@ The following command both runs all the steps of the conan file, and publishes t
 
 ## Conan Recipe License
 
-NOTE: The conan recipe license applies only to the files of this recipe, which can be used to build and package benchmark.
+NOTE: The conan recipe license applies only to the files of this recipe, which can be used to build and package google_benchmark.
 It does *not* in any way apply or is related to the actual software being packaged.
+
+[MIT](https://github.com/Croydon/conan-google_benchmark.git/blob/testing/1.4.1/LICENSE)
