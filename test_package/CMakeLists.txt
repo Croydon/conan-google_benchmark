@@ -1,20 +1,12 @@
+project(test_package)
 cmake_minimum_required(VERSION 3.0)
 
-project(BenchmarkPackageTest
-         VERSION       0.0.1
-         LANGUAGES     C  CXX
-)
+set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
-set(CMAKE_CXX_STANDARD  11)
-set(CMAKE_CXX_STANDARD_REQUIRED  OFF)
-set(CMAKE_CXX_EXTENSIONS  OFF)
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
 
-include("${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
-conan_basic_setup(TARGETS)
+file(GLOB SOURCE_FILES *.cpp)
 
-add_executable(BenchmarkPackageTest
-    main.cpp
-)
-target_link_libraries(BenchmarkPackageTest
-    PRIVATE  CONAN_PKG::benchmark
-)
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
