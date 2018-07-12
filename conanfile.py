@@ -25,7 +25,7 @@ class GoogleBenchmarkConan(ConanFile):
 
     def source(self):
         archive_url = "https://github.com/google/benchmark/archive/v{!s}.zip".format(self.version)
-        tools.get(archive_url, sha256="61ae07eb5d4a0b02753419eb17a82b7d322786bb36ab62bd3df331a4d47c00a7")
+        tools.get(archive_url, sha256="7f5f3608c9228fa023151a4b54e91f4ada4b7b49c26facede6c5b8b83ddbedad")
         shutil.move("benchmark-{!s}".format(self.version), self.source_subfolder)
 
     def _configure_cmake(self):
