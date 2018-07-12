@@ -4,7 +4,7 @@ import shutil
 
 class GoogleBenchmarkConan(ConanFile):
     name = "google_benchmark"
-    version = "1.4.1"
+    version = "1.4.0"
     description = "A microbenchmark support library."
     url = "http://github.com/croydon/conan-google_benchmark"
     homepage = "https://github.com/google/benchmark"
@@ -34,6 +34,7 @@ class GoogleBenchmarkConan(ConanFile):
         cmake.definitions["BENCHMARK_ENABLE_TESTING"] = "OFF"
         cmake.definitions["BENCHMARK_ENABLE_LTO"] = "ON" if self.options.enable_lto else "OFF"
         cmake.definitions["BENCHMARK_ENABLE_EXCEPTIONS"] = "ON" if self.options.enable_exceptions else "OFF"
+        cmake.definitions["BENCHMARK_ENABLE_INSTALL"] = "ON"
 
         # See https://github.com/google/benchmark/pull/523
         if self.settings.os != "Windows":

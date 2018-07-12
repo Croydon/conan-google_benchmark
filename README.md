@@ -1,6 +1,6 @@
 [![Download](https://api.bintray.com/packages/bincrafters/public-conan/google_benchmark%3Abincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/google_benchmark%3Abincrafters/_latestVersion)
-[![Build Status](https://travis-ci.org/bincrafters/conan-google_benchmark.svg?branch=stable%2F1.4.1)](https://travis-ci.org/bincrafters/conan-google_benchmark)
-[![Build status](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-google_benchmark?branch=stable%2F1.4.1&svg=true)](https://ci.appveyor.com/project/bincrafters/conan-google_benchmark)
+[![Build Status](https://travis-ci.org/bincrafters/conan-google_benchmark.svg?branch=stable%2F1.4.0)](https://travis-ci.org/bincrafters/conan-google_benchmark)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-google_benchmark?branch=stable%2F1.4.0&svg=true)](https://ci.appveyor.com/project/bincrafters/conan-google_benchmark)
 
 [Conan.io](https://conan.io) package recipe for [*google_benchmark*](https://github.com/google/benchmark).
 
@@ -12,14 +12,14 @@ The packages generated with this **conanfile** can be found on [Bintray](https:/
 
 ### Basic setup
 
-    $ conan install google_benchmark/1.4.1@bincrafters/stable
+    $ conan install google_benchmark/1.4.0@bincrafters/stable
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    google_benchmark/1.4.1@bincrafters/stable
+    google_benchmark/1.4.0@bincrafters/stable
 
     [generators]
     cmake
@@ -54,7 +54,7 @@ The following command both runs all the steps of the conan file, and publishes t
 
 ## Upload
 
-    $ conan upload google_benchmark/1.4.1@bincrafters/stable --all -r bincrafters
+    $ conan upload google_benchmark/1.4.0@bincrafters/stable --all -r bincrafters
 
 
 ## Conan Recipe License
@@ -62,4 +62,4 @@ The following command both runs all the steps of the conan file, and publishes t
 NOTE: The conan recipe license applies only to the files of this recipe, which can be used to build and package google_benchmark.
 It does *not* in any way apply or is related to the actual software being packaged.
 
-[MIT](https://github.com/Croydon/conan-google_benchmark.git/blob/testing/1.4.1/LICENSE)
+[MIT](https://github.com/Croydon/conan-google_benchmark.git/blob/testing/1.4.0/LICENSE)
