@@ -52,7 +52,7 @@ class GoogleBenchmarkConan(ConanFile):
         self.copy(pattern="*", dst="lib", src="lib", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = [self.name]
+        self.cpp_info.libs = "benchmark"
         if self.settings.os == "Linux":
             self.cpp_info.libs.extend(["pthread", "rt"])
         if self.settings.os == "Windows":
