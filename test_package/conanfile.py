@@ -5,7 +5,6 @@ import os
 class BenchmarkConanPackageTest(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
-    build_policy = "missing"
 
     def build(self):
         cmake = CMake(self)
