@@ -3,7 +3,7 @@ import os
 
 
 class GoogleBenchmarkConan(ConanFile):
-    name = "google_benchmark"
+    name = "benchmark"
     version = "1.4.1"
     description = "A microbenchmark support library."
     url = "https://github.com/croydon/conan-google_benchmark"
