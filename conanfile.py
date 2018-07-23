@@ -32,6 +32,7 @@ class GoogleBenchmarkConan(ConanFile):
     def config_options(self):
         if self.settings.os == 'Windows':
             del self.options.fPIC
+            del self.options.shared  # See https://github.com/google/benchmark/issues/639 - no Windows shared support for now
 
     def _configure_cmake(self):
         cmake = CMake(self)
@@ -40,12 +41,13 @@ class GoogleBenchmarkConan(ConanFile):
         cmake.definitions["BENCHMARK_ENABLE_LTO"] = "ON" if self.options.enable_lto else "OFF"
         cmake.definitions["BENCHMARK_ENABLE_EXCEPTIONS"] = "ON" if self.options.enable_exceptions else "OFF"
 
-        # See https://github.com/google/benchmark/pull/523
+        # See https://github.com/google/benchmark/pull/638 for Windows 32 build explanation
         if self.settings.os != "Windows":
             cmake.definitions["BENCHMARK_BUILD_32_BITS"] = "ON" if "64" not in str(self.settings.arch) else "OFF"
             cmake.definitions["BENCHMARK_USE_LIBCXX"] = "ON" if (str(self.settings.compiler.libcxx) == "libc++") else "OFF"
         else:
             cmake.definitions["BENCHMARK_USE_LIBCXX"] = "OFF"
+
         cmake.configure(build_folder=self.build_subfolder)
         return cmake
 
