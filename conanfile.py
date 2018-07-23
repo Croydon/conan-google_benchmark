@@ -14,11 +14,13 @@ class GoogleBenchmarkConan(ConanFile):
         "shared": [True, False],
         "fPIC": [True, False],
         "enable_exceptions": [True, False],
-        "enable_lto": [True, False]
+        "enable_lto": [True, False],
+        "enable_testing": [True, False],
+        "enable_gtest_tests": [True, False]
     }
-    default_options = "shared=False", "fPIC=True", "enable_exceptions=True", "enable_lto=False",
+    default_options = "shared=False", "fPIC=True", "enable_exceptions=True", "enable_lto=False", "enable_testing=False","enable_gtest_tests=False"
     exports = ["LICENSE"]
-    exports_sources = "CMakeLists.txt", "benchmarkConfig.cmake"
+    exports_sources = ["CMakeLists.txt", "benchmarkConfig.cmake"]
     generators = "cmake"
 
     source_subfolder = "source_subfolder"
@@ -33,11 +35,14 @@ class GoogleBenchmarkConan(ConanFile):
         if self.settings.os == 'Windows':
             del self.options.fPIC
             del self.options.shared  # See https://github.com/google/benchmark/issues/639 - no Windows shared support for now
+        if self.options.enable_testing == False:
+            self.options.enable_gtest_tests = False
 
     def _configure_cmake(self):
         cmake = CMake(self)
-        cmake.definitions["BUILD_SHARED_LIBS"] = "ON" if self.options.shared else "OFF"
-        cmake.definitions["BENCHMARK_ENABLE_TESTING"] = "OFF"
+        cmake.definitions["BUILD_SHARED_LIBS"] = "ON" if self.settings.os != 'Windows' and self.options.shared else "OFF"
+        cmake.definitions['BENCHMARK_ENABLE_TESTING'] = "ON" if self.options.enable_testing else "OFF"
+        cmake.definitions['BENCHMARK_ENABLE_GTEST_TESTS'] = "ON" if self.options.enable_gtest_tests and self.options.enable_testing else "OFF"
         cmake.definitions["BENCHMARK_ENABLE_LTO"] = "ON" if self.options.enable_lto else "OFF"
         cmake.definitions["BENCHMARK_ENABLE_EXCEPTIONS"] = "ON" if self.options.enable_exceptions else "OFF"
 
@@ -50,6 +55,10 @@ class GoogleBenchmarkConan(ConanFile):
 
         cmake.configure(build_folder=self.build_subfolder)
         return cmake
+
+    def build_requirements(self):
+        if self.options.enable_gtest_tests:
+            self.build_requires("gtest/1.8.0@bincrafters/stable")
 
     def build(self):
         cmake = self._configure_cmake()
@@ -66,5 +75,5 @@ class GoogleBenchmarkConan(ConanFile):
         self.cpp_info.libs = tools.collect_libs(self)
         if self.settings.os == "Linux":
             self.cpp_info.libs.extend(["pthread", "rt"])
-        if self.settings.os == "Windows":
+        elif self.settings.os == "Windows":
             self.cpp_info.libs.append("shlwapi")
