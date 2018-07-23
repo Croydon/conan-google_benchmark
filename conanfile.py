@@ -17,6 +17,7 @@ class GoogleBenchmarkConan(ConanFile):
         "enable_lto": [True, False]
     }
     default_options = "shared=False", "fPIC=True", "enable_exceptions=True", "enable_lto=False",
+    exports = ["LICENSE"]
     exports_sources = "CMakeLists.txt", "benchmarkConfig.cmake"
     generators = "cmake"
 
@@ -57,10 +58,7 @@ class GoogleBenchmarkConan(ConanFile):
         cmake.install()
 
         self.copy(pattern="LICENSE", dst="licenses", src=self.source_subfolder)
-        self.copy(pattern="*.h", dst="include", src="include/benchmark", keep_path=False)
         self.copy("benchmarkConfig.cmake", dst=".", src=".", keep_path=False)
-        self.copy(pattern="*", dst="lib", src="lib", keep_path=False)
-        self.copy(pattern="*.dll", dst="bin", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
