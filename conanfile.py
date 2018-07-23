@@ -69,7 +69,6 @@ class GoogleBenchmarkConan(ConanFile):
         cmake.install()
 
         self.copy(pattern="LICENSE", dst="licenses", src=self.source_subfolder)
-        self.copy("benchmarkConfig.cmake", dst=".", src=".", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
