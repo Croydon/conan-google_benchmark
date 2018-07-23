@@ -11,11 +11,12 @@ class GoogleBenchmarkConan(ConanFile):
     license = "Apache-2.0"
     settings = "arch", "build_type", "compiler", "os"
     options = {
-        "enable_lto": [True, False],
+        "shared": [True, False],
+        "fPIC": [True, False],
         "enable_exceptions": [True, False],
-        "shared": [True, False]
+        "enable_lto": [True, False]
     }
-    default_options = "enable_lto=False", "enable_exceptions=True", "shared=False"
+    default_options = "shared=False", "fPIC=True", "enable_exceptions=True", "enable_lto=False",
     exports_sources = "CMakeLists.txt", "benchmarkConfig.cmake"
     generators = "cmake"
 
@@ -26,6 +27,10 @@ class GoogleBenchmarkConan(ConanFile):
         archive_url = "https://github.com/google/benchmark/archive/v{!s}.zip".format(self.version)
         tools.get(archive_url, sha256="61ae07eb5d4a0b02753419eb17a82b7d322786bb36ab62bd3df331a4d47c00a7")
         os.rename("benchmark-{!s}".format(self.version), self.source_subfolder)
+
+    def config_options(self):
+        if self.settings.os == 'Windows':
+            del self.options.fPIC
 
     def _configure_cmake(self):
         cmake = CMake(self)
